@@ -7,7 +7,12 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:api": "cypress run --spec 'cypress/e2e/api/**/*.cy.js'",
+    "test:frontend": "cypress run --spec 'cypress/e2e/frontend/**/*.cy.js'",
+    "test:api:open": "cypress open --e2e --spec 'cypress/e2e/api/**/*.cy.js'",
+    "test:frontend:open": "cypress open --e2e --spec 'cypress/e2e/frontend/**/*.cy.js'"
   },
   "repository": {
     "type": "git",
@@ -17,6 +22,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
     "cypress": "^15.14.2"
   }
 }
