@@ -23,3 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('apiPost', (path, payload, failOnStatusCode = false) => {
+    cy.env(['baseURLApi']).then(({ baseURLApi }) => {
+        cy.request({
+            method: 'POST',
+            url: `${baseURLApi}${path}`,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: payload,
+            failOnStatusCode,
+        });
+    });
+});
+
+Cypress.Commands.add('apiGet', (path, filters = null, failOnStatusCode = false) => {
+    cy.env(['baseURLApi']).then(({ baseURLApi }) => {
+        cy.request({
+            method: 'GET',
+            url: `${baseURLApi}${path}`,
+            headers: {
+              'Accept': 'application/json',
+            },
+            qs: filters,
+            failOnStatusCode,
+        });
+    });
+})
