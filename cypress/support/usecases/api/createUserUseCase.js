@@ -1,19 +1,19 @@
-const UserApiClient = require('../../adapters/api/UserApiClient');
-
+const UserApiClient = require('../../api/apiClient');
 async function createUserUseCase(payload, failOnStatusCode = false) {
-  const client = new UserApiClient();
+  const path = '/usuarios';
+  const apiClient = new UserApiClient();
 
   cy.log(`[createUserUseCase] ► Initiating user creation`);
   cy.log(`[createUserUseCase]   nome          : ${payload.nome}`);
   cy.log(`[createUserUseCase]   email         : ${payload.email}`);
   cy.log(`[createUserUseCase]   administrador : ${payload.administrador}`);
-  cy.log(`[createUserUseCase]   endpoint      : POST /usuarios`);
+  cy.log(`[createUserUseCase]   endpoint      : POST ${path}`);
 
-  const response = await client.createUser(payload, failOnStatusCode);
+  const response = await apiClient.createUser(path, payload, failOnStatusCode);
   cy.log(`[createUserUseCase] ◄ Response received`);
   cy.log(`[createUserUseCase]   status : ${response.status}`);
   cy.log(`[createUserUseCase]   body   : ${JSON.stringify(response.body)}`);
-  
+
   return response;
 }
 

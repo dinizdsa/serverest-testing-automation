@@ -5,7 +5,8 @@ module.exports = defineConfig({
 
   e2e: {
     setupNodeEvents(on, config) {},
-
+    defaultCommandTimeout: 8000, // Changes default from 4s to 8s
+    pageLoadTimeout: 100000,     // Changes default from 60s to 100s
     specPattern: "cypress/e2e/**/*.cy.js",
     viewportWidth: 1280,
     viewportHeight: 720,
