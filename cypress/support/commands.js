@@ -50,4 +50,17 @@ Cypress.Commands.add('apiGet', (path, filters = null, failOnStatusCode = false) 
             failOnStatusCode,
         });
     });
-})
+});
+
+Cypress.Commands.add('apiDelete', (path, failOnStatusCode = false) => {
+  cy.env(['baseURLApi']).then(({ baseURLApi }) => {
+    cy.request({
+      method: 'DELETE',
+      url: `${baseURLApi}${path}`,
+      headers: {
+        'Accept': 'application/json',
+      },
+      failOnStatusCode,
+    });
+  });
+});
