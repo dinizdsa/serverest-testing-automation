@@ -4,7 +4,7 @@ const API_MESSAGES = require('../../../support/constants/apiMessages');
 
 describe('CREATE USER — Frontend', () => {
 
-const createUser = (baseURLFrontend, user) => {
+const createUser = (baseURLFrontend, user, isAdmin = true) => {
   cy.visit(`${baseURLFrontend}`);
   cy.get('[data-testid="cadastrar"]').click();
 
@@ -13,7 +13,11 @@ const createUser = (baseURLFrontend, user) => {
   cy.get('[data-testid="nome"]').type(user.nome);
   cy.get('[data-testid="email"]').type(user.email);
   cy.get('[data-testid="password"]').type(user.password);
-  cy.get('[data-testid="checkbox"]').check();
+  if (isAdmin) {
+    cy.get('[data-testid="checkbox"]').check();
+  } else {
+    cy.get('[data-testid="checkbox"]').uncheck();
+  }
 
   cy.get('[data-testid="cadastrar"]').click();
 }
@@ -25,7 +29,8 @@ const createUser = (baseURLFrontend, user) => {
 
         createUser(baseURLFrontend, user);
 
-        cy.url().should('include', '/home');
+        cy.url().should('include', '/admin/home');
+        cy.get('[data-testid="cadastrar-usuarios"]').should('be.visible');
         cy.get('[data-testid="logout"]').should('be.visible');
       });
     });
@@ -34,8 +39,9 @@ const createUser = (baseURLFrontend, user) => {
       cy.env(['baseURLFrontend']).then(({ baseURLFrontend }) => {
         const user = DataGenerator.generateValidUser();
 
-        createUser(baseURLFrontend, user);
+        createUser(baseURLFrontend, user, false);
 
+        cy.url().should('not.contain', '/admin');
         cy.url().should('include', '/home');
         cy.get('[data-testid="logout"]').should('be.visible');
       });
