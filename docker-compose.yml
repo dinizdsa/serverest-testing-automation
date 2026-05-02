@@ -1,0 +1,20 @@
+services:
+  test-api:
+    build: .
+    command: ["--spec", "cypress/e2e/api/**/*.cy.js"]
+    volumes:
+      - ./cypress/videos:/app/cypress/videos
+      - ./cypress/screenshots:/app/cypress/screenshots
+
+  test-frontend:
+    build: .
+    command: ["--spec", "cypress/e2e/frontend/**/*.cy.js"]
+    volumes:
+      - ./cypress/videos:/app/cypress/videos
+      - ./cypress/screenshots:/app/cypress/screenshots
+
+  test-all:
+    build: .
+    volumes:
+      - ./cypress/videos:/app/cypress/videos
+      - ./cypress/screenshots:/app/cypress/screenshots
